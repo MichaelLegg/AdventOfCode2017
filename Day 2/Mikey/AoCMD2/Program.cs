@@ -21,6 +21,7 @@ namespace AoCMD2
             }
 
             Console.WriteLine(Puzzle1(intVersion));
+            Console.WriteLine(Puzzle2(intVersion));
             Console.ReadLine();
         }
 
@@ -28,11 +29,11 @@ namespace AoCMD2
         {
             int returnSum = 0;
             int curMax, curMin;
-            for (int i = 0; i < intVersion.GetLength(0); i++)
+            for (int i = 0; i < intVersion.GetLength(0); i++) // for each array
             {
                 curMax = 0;
                 curMin = 0;
-                for (int x = 0; x < intVersion[i].Length; x++)
+                for (int x = 0; x < intVersion[i].Length; x++) // for each item in that array
                 {
                     if (intVersion[i][x] > curMax)
                         curMax = intVersion[i][x];
@@ -42,6 +43,33 @@ namespace AoCMD2
                 returnSum += (curMax - curMin);
             }
             return returnSum;
+        }
+
+        private static int Puzzle2(int[][] intVersion)
+        {
+            int returnSum = 0;
+            for (int i = 0; i < intVersion.GetLength(0); i++)
+            {
+                bool foundFlag = false;
+                for (int x = 0; x < intVersion[i].Length; x++)
+                {
+                    if (foundFlag)
+                        break;
+                    for (int y = 0; y < intVersion[i].Length; y++)
+                    {
+                        if (x==y)
+                            continue;
+                        int checkVal = intVersion[i][x];
+                        if (checkVal % intVersion[i][y] == 0)
+                        {
+                            returnSum += checkVal / intVersion[i][y];
+                            foundFlag = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            return (returnSum);
         }
     }
 }
