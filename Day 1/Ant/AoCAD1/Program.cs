@@ -16,6 +16,7 @@ namespace ConsoleApp1
             List<int> numbers = new List<int> { };
             int sizeOfList = 0;
             int answer = 0;
+            int answerTwo = 0;
             int numberOne = -1;
             int numberTwo = -1;
 
@@ -44,7 +45,37 @@ namespace ConsoleApp1
             {
                 answer = answer + numberOne;
             }
+
+
+            // Start part 2
+            int numberOneIndex = 0;
+            int numberTwoIndex = (sizeOfList/2);
+            if (numbers[numberOneIndex] == numbers[numberTwoIndex])
+            {
+                answerTwo = answerTwo + numbers[numberOneIndex];
+            }
+            for (int i = 2; i < sizeOfList; i++)
+            {
+                numberOneIndex++;
+                numberTwoIndex++;
+                if (numberTwoIndex == (sizeOfList))
+                {
+                    numberTwoIndex = 0;
+                } 
+                if (numbers[numberOneIndex] == numbers[numberTwoIndex])
+                {
+                    answerTwo = answerTwo + numbers[numberOneIndex];
+                }
+            }
+            numberTwoIndex++;
+            numberOneIndex++;
+            if (numbers[numberOneIndex] == numbers[numberTwoIndex])
+            {
+                answerTwo = answerTwo + numbers[numberOneIndex];
+            }
+
             Console.WriteLine("Your answer is: " + answer);
+            Console.WriteLine("Your part 2 answer is: " + answerTwo);
             Console.ReadKey(); // Used to pause appliaction to get answer
         }
     }
