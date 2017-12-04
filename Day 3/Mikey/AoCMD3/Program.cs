@@ -13,7 +13,7 @@ namespace AoCMD3
             const int BIGGESTNUMBER = 361527;
             BuildArray(BIGGESTNUMBER);
 
-            Console.WriteLine("Puzzel 2 output: " + Puzzle2(BIGGESTNUMBER));
+            Console.WriteLine("Puzzle 2 output: " + Puzzle2(BIGGESTNUMBER));
             Console.ReadLine();
         }
 
