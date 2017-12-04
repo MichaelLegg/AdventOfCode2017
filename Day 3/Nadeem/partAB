@@ -1,0 +1,126 @@
+     public static void A()
+        {
+
+            int[,] f = new int[25, 25];
+            int mid = 12;
+            f[mid, mid] = 1;
+            int increaseXCap = 1;
+            int increaseYCap = -1;
+            int increaseXCur = 0;
+            int increaseYCur = 0;
+            ArrayList arr = new ArrayList();
+            for (int i = 2; i <= 625; i++)
+            {
+
+                if (increaseXCur != increaseXCap)
+                {
+                    increaseXCur += (Math.Abs(increaseXCap) / increaseXCap);
+                }
+                else if (increaseYCur != increaseYCap)
+                {
+                    increaseYCur += (Math.Abs(increaseYCap) / increaseYCap);
+                }
+                int z=0;
+                int a= 0;
+                for (int x = -1; x <= 1; x++)
+                {
+                    for (int y = -1; y <= 1; y++)
+                    {
+                        if (x == 0 && y == 0)
+                            continue;
+
+                        f[increaseYCur + mid, increaseXCur  + mid] += f[y + mid + increaseYCur, x+ mid+ increaseXCur];
+
+                        if (f[increaseYCur + mid, increaseXCur + mid] >= 289326)
+                        {
+                            z = f[increaseYCur + mid, increaseXCur + mid];
+                           
+                        }
+                        a = f[increaseYCur + mid, increaseXCur + mid];
+                    }
+
+                }
+                arr.Add(a);
+                if (z > 0)
+                {
+                    z = 2;
+                }
+
+
+                if (increaseYCur == increaseYCap)
+                {
+                    if ((Math.Abs(increaseYCap) / increaseYCap) == 1)
+                    {
+                        increaseYCap = -increaseYCap;
+                        increaseYCap -= 1;
+                    }
+                    else
+                    {
+                        increaseYCap = -increaseYCap;
+
+                    }
+
+                    if ((Math.Abs(increaseXCap) / increaseXCap) == 1)
+                    {
+                        increaseXCap = -increaseXCap;
+                    }
+                    else
+                    {
+                        increaseXCap = -increaseXCap;
+                        increaseXCap += 1;
+                    }
+                }
+            }
+        }
+
+        public static int[] B()
+        {
+            int[] no = new int[2];
+            int center = 200;
+            int number = 0;
+            int increaseXCap = 1;
+            int increaseYCap = -1;
+            int increaseXCur = 0;
+            int increaseYCur = 0;
+
+            for (int i = 2; i<= 81; i++)
+            {
+                if (increaseXCur != increaseXCap)
+                {
+                    increaseXCur += (Math.Abs(increaseXCap) / increaseXCap);
+                }
+                else if (increaseYCur != increaseYCap)
+                {
+                    increaseYCur += (Math.Abs(increaseYCap) / increaseYCap);
+                }
+
+                if (increaseYCur == increaseYCap)
+                {
+                    if ((Math.Abs(increaseYCap) / increaseYCap) == 1)
+                    {
+                        increaseYCap = -increaseYCap;
+                        increaseYCap -= 1;
+                    }
+                    else
+                    {
+                        increaseYCap = -increaseYCap;
+                        
+                    }
+
+                    if ((Math.Abs(increaseXCap) / increaseXCap) == 1)
+                    {
+                        increaseXCap = -increaseXCap;
+                    }
+                    else
+                    {
+                        increaseXCap = -increaseXCap;
+                        increaseXCap += 1;
+                    }                   
+                }
+
+            }
+            no[0] = increaseXCur;
+            no[1] = increaseYCur;
+            int tota = Math.Abs(increaseXCur) + Math.Abs(increaseYCur);
+            return no;
+        }
