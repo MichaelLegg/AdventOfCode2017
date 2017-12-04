@@ -29,7 +29,7 @@ namespace AoCMD3
             dimension--; // since it's going to be 0 indexed
 
             // check if it's even or not
-            if ((dimension % 2) == 0)  // if it is even, that's fine since 0 - 2 for example is 3 numbers (0 indexed), otherwise we need to make it even, so one bigger
+            if ((dimension % 2) == 0)  // this was the broken bit, need to make sure that the grid is created using an odd number in the x and y direction. So if there's a remainder of 0 just add 1 to it
             {
                 dimension++;
             }
