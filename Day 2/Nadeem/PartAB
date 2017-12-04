@@ -1,0 +1,59 @@
+        public static void Task2ab()
+        {
+            int total = 0;
+
+
+
+            System.IO.StreamReader file =
+    new System.IO.StreamReader(@"C:\Users\Nadeem Sadiq\Desktop\input.txt");
+            string line;
+            int totalMax = 0;
+            int totalMin = 0;
+            while ((line = file.ReadLine()) != null)
+            {
+                string[] vals = line.Split('\t');
+                int max = Int32.MinValue;
+                int min = Int32.MaxValue;
+                int counter = 0;
+                foreach (string inp in vals)
+                {
+                    counter++;
+                    int curVal = Int32.Parse(inp);
+
+                    for (int i = counter; i < vals.Length; i++)
+                    {
+                        int x = Int32.Parse(vals[i]);
+                        if (Int32.Parse(vals[i]) % curVal == 0)
+                        {
+                            total += (Int32.Parse(vals[i]) / curVal); //part b stuff
+                        }
+                        else if (curVal % Int32.Parse(vals[i]) == 0)
+                        {
+                            total += (curVal / Int32.Parse(vals[i]));
+                        }
+
+                    }
+
+
+
+                    //if (max< curVal)
+                    //{
+                    //    max = curVal;
+                    //}
+                    //if (min > curVal)
+                    //{
+                    //    min = curVal; part A
+                    //}
+
+                }
+                counter = 0;
+
+                //total += max - min;
+                totalMax += max;
+                totalMin += min;
+
+            }
+
+            total = total + 1 - 1;
+
+        }
