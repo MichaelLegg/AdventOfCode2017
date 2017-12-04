@@ -58,54 +58,48 @@ namespace AoCMD3
                 if (currentState == State.increasingX)
                 {
                     currentX++;
-                    if(currentX + 1 > dimension -1 || (builtArray[currentX+1, currentY] == 0) && builtArray[currentX, currentY-1] == 0){
+                    if (currentX + 1 > dimension - 1 || (builtArray[currentX + 1, currentY] == 0) && builtArray[currentX, currentY - 1] == 0)
                         currentState = State.decreasingY;
-                    }
                 }
                 else if (currentState == State.increasingY)
                 {
                     currentY++;
-                    if(currentY + 1 > dimension - 1 || (builtArray[currentX, currentY+1] == 0) && builtArray[currentX + 1, currentY] == 0)
-                    {
+                    if (currentY + 1 > dimension - 1 || (builtArray[currentX, currentY + 1] == 0) && builtArray[currentX + 1, currentY] == 0)
                         currentState = State.increasingX;
-                    }
                 }
-                else if(currentState == State.decreasingX)
+                else if (currentState == State.decreasingX)
                 {
                     currentX--;
-                    if (currentX - 1 < 0 || (builtArray[currentX-1, currentY] == 0) && builtArray[currentX, currentY + 1] == 0)
-                    {
+                    if (currentX - 1 < 0 || (builtArray[currentX - 1, currentY] == 0) && builtArray[currentX, currentY + 1] == 0)
                         currentState = State.increasingY;
-                    }
                 }
-                else if(currentState == State.decreasingY)
+                else if (currentState == State.decreasingY)
                 {
                     currentY--;
-                    if (currentY - 1 < 0 || (builtArray[currentX, currentY-1] == 0) && builtArray[currentX - 1, currentY] == 0)
-                    {
+                    if (currentY - 1 < 0 || (builtArray[currentX, currentY - 1] == 0) && builtArray[currentX - 1, currentY] == 0)
                         currentState = State.decreasingX;
-                    }
                 }
-                if(currentValue == biggestNumber)
+                if (currentValue == biggestNumber)
                     maxSetFlag = true;
                 else
                     currentValue++;
-                
+
             } while (!maxSetFlag); // do it until we've set the biggest value
             Console.WriteLine("Puzzle 1 solution: " + Puzzle1(builtArray, dimension, biggestNumber));
         }
-        
+
         private static int Puzzle1(int[,] builtArray, int dimension, double searchVal)
         {
             int half = dimension / 2;
 
             int searchX = 0;
             int searchY = 0;
-            for (int x = (dimension-1); x != 1; x--)
-            {                
+            for (int x = (dimension - 1); x != 1; x--)
+            {
                 for (int y = dimension - 1; y != 1; y--)
                 {
-                    if(builtArray[x,y] == searchVal){
+                    if (builtArray[x, y] == searchVal)
+                    {
                         searchX = x;
                         searchY = y;
                         break;
@@ -123,7 +117,7 @@ namespace AoCMD3
                 sum += searchY - half;
             else
                 sum += half - searchY;
-           
+
             return sum;
         }
 
@@ -135,15 +129,15 @@ namespace AoCMD3
             dimension--; // since it's going to be 0 indexed
 
             // check if it's even or not
-            if ((dimension % 2) == 0)             
-                dimension++;            
+            if ((dimension % 2) == 0)
+                dimension++;
 
             int[,] builtArray = new int[dimension, dimension];
 
             int half = dimension / 2;
 
             int currentX = half;
-            int currentY = half;            
+            int currentY = half;
 
             bool maxSetFlag = false;
 
@@ -164,76 +158,59 @@ namespace AoCMD3
                     // EAST
                     if (currentX + 1 < dimension - 1)
                         toBeAdded += builtArray[currentX + 1, currentY];
-
                     // WEST
                     if (currentX - 1 > 0)
                         toBeAdded += builtArray[currentX - 1, currentY];
-
                     // NORTH
                     if (currentY - 1 > 0)
                         toBeAdded += builtArray[currentX, currentY - 1];
-
                     // SOUTH
                     if (currentY + 1 < dimension - 1)
                         toBeAdded += builtArray[currentX, currentY + 1];
-
                     // NORTH EAST
                     if (currentX + 1 < dimension - 1 && currentY - 1 > 0)
                         toBeAdded += builtArray[currentX + 1, currentY - 1];
-
                     // NORTH WEST
                     if (currentX - 1 > 0 && currentY - 1 > 0)
                         toBeAdded += builtArray[currentX - 1, currentY - 1];
-
                     // SOUTH EAST
                     if (currentX + 1 < dimension - 1 && currentY + 1 < dimension - 1)
                         toBeAdded += builtArray[currentX + 1, currentY + 1];
-
                     // SOUTH WEST      
                     if (currentX - 1 > 0 && currentY + 1 < dimension)
                         toBeAdded += builtArray[currentX - 1, currentY + 1];
                     builtArray[currentX, currentY] = toBeAdded;
-
                 }
 
                 Console.WriteLine(toBeAdded);
                 // check here for when we've hit one where it's bigger
                 if (toBeAdded > biggestNumber)
                     return toBeAdded;
-                
 
-                    if (currentState == State.increasingX)
+                if (currentState == State.increasingX)
                 {
                     currentX++;
-                    if (currentX + 1 > dimension - 1 || (builtArray[currentX + 1, currentY] == 0) && builtArray[currentX, currentY - 1] == 0)
-                    {
-                        currentState = State.decreasingY;
-                    }
+                    if (currentX + 1 > dimension - 1 || (builtArray[currentX + 1, currentY] == 0) && builtArray[currentX, currentY - 1] == 0)                    
+                        currentState = State.decreasingY;                    
                 }
                 else if (currentState == State.increasingY)
                 {
                     currentY++;
-                    if (currentY + 1 > dimension - 1 || (builtArray[currentX, currentY + 1] == 0) && builtArray[currentX + 1, currentY] == 0)
-                    {
-                        currentState = State.increasingX;
-                    }
+                    if (currentY + 1 > dimension - 1 || (builtArray[currentX, currentY + 1] == 0) && builtArray[currentX + 1, currentY] == 0)                    
+                        currentState = State.increasingX;                    
                 }
                 else if (currentState == State.decreasingX)
                 {
                     currentX--;
-                    if (currentX - 1 < 0 || (builtArray[currentX - 1, currentY] == 0) && builtArray[currentX, currentY + 1] == 0)
-                    {
-                        currentState = State.increasingY;
-                    }
+                    if (currentX - 1 < 0 || (builtArray[currentX - 1, currentY] == 0) && builtArray[currentX, currentY + 1] == 0)                    
+                        currentState = State.increasingY;                    
                 }
                 else if (currentState == State.decreasingY)
                 {
                     currentY--;
-                    if (currentY - 1 < 0 || (builtArray[currentX, currentY - 1] == 0) && builtArray[currentX - 1, currentY] == 0)
-                    {
-                        currentState = State.decreasingX;
-                    }
-                }              
+                    if (currentY - 1 < 0 || (builtArray[currentX, currentY - 1] == 0) && builtArray[currentX - 1, currentY] == 0)                    
+                        currentState = State.decreasingX;                    
+                }
             } while (!maxSetFlag); // do it until we've set the biggest value
             return 1;
         }
