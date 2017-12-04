@@ -10,8 +10,12 @@ namespace AoCMD3
     {
         static void Main(string[] args)
         {
-            const int BIGGESTNUMBER = 25;
-            BuildArray(BIGGESTNUMBER);      
+            const int BIGGESTNUMBER = 361527;
+            BuildArray(BIGGESTNUMBER);
+
+
+
+
             Console.ReadLine();
         }
 
@@ -23,7 +27,7 @@ namespace AoCMD3
             decreasingY
         }
 
-        private static int[,] BuildArray(double biggestNumber)
+        private static void BuildArray(double biggestNumber)
         {
             int dimension = (int)Math.Ceiling(Math.Sqrt(biggestNumber));
             dimension--; // since it's going to be 0 indexed
@@ -45,6 +49,8 @@ namespace AoCMD3
 
             State currentState = State.increasingX;
 
+            // OK X AND Y ARE ACTUALLY THE WRONG WAY AROUND, IT'S ROWS AND COLUMNS RATHER THAN POSITIONS ON AN AXIS SO VARIABLE NAMES ARE WROOOOONG
+            // ALSO, I PROBABLY REALLY DIDN'T NEED TO ACTUALLY BUILD A SPIRAL TO SOLVE THIS, BUT IT'S QUITE COOL AND NOW I KNOW HOW TO BUILD A SPIRAL...RIGHT?
             int currentValue = 1;
             do
             {
@@ -88,14 +94,34 @@ namespace AoCMD3
                     currentValue++;
                 
             } while (!maxSetFlag); // do it until we've set the biggest value
-
-            return builtArray;
+            Console.WriteLine(Puzzle1(builtArray, dimension, biggestNumber));
         }
         
-        private static int Puzzle1()
+        private static int Puzzle1(int[,] builtArray, int dimension, double searchVal)
         {
+            int half = dimension / 2;
 
-            return 1;
+            int searchX = 0;
+            int searchY = 0;
+            for (int x = (dimension-1); x != 1; x--)
+            {                
+                for (int y = dimension - 1; y != 1; y--)
+                {
+                    if(builtArray[x,y] == searchVal){
+                        searchX = x;
+                        searchY = y;
+                        break;
+                    }
+                }
+            }
+            int sum = 0;
+            // quick and dirty
+            if (searchX > half)
+                sum += searchX - half;
+            else       
+            
+           (searchX - half) + (half -searchY);
+            return sum;
         }
     }
 }
