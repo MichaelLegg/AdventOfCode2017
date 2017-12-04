@@ -1,0 +1,88 @@
+
+        public static void PassA()
+        {
+            int total = 0;
+
+
+
+            System.IO.StreamReader file =
+    new System.IO.StreamReader(@"C:\Users\Nadeem Sadiq\Desktop\input (1).txt");
+            string line;
+    
+            while ((line = file.ReadLine()) != null)
+            {
+                string[] vals = line.Split(' ');
+                HashSet<string> v = new HashSet<string>(vals);
+
+
+                if (vals.Length == v.Count)
+                {
+                    total++;
+                }
+            }
+            total = 0;
+        }
+
+        public static void PassB()
+        {
+            int total = 0;
+
+
+
+            System.IO.StreamReader file =
+    new System.IO.StreamReader(@"C:\Users\Nadeem Sadiq\Desktop\input (1).txt");
+            string line;
+
+            while ((line = file.ReadLine()) != null)
+            {
+                string[] vals = line.Split(' ');
+
+
+
+                HashSet<string> v = new HashSet<string>(vals);
+
+
+               
+                ArrayList arr = new ArrayList();
+                foreach (string x in vals)
+                {
+                    Dictionary<Char, Int32> d = new Dictionary<char, int>();
+                    foreach (char y in x.ToCharArray())
+                    {
+
+                        if(d.ContainsKey(y))
+                        {
+                            d[y] += 1;
+                        }
+                        else
+                        {
+                            d.Add(y, 1);
+                        }
+                    }
+                    arr.Add(d);
+                }
+                bool check = false;
+                for (int  i=0;i < arr.Count; i++)
+                {
+                    for (int j=i+1;j<arr.Count;j++ )
+                    {
+                        Dictionary<Char, Int32> dic1 = (Dictionary < Char, Int32 >)arr[i];
+                        Dictionary<Char, Int32> dic2 = (Dictionary<Char, Int32>)arr[j];
+                        var t = dic1.Keys;
+                        var t1 = dic2.Keys;
+                        if ((dic1 == dic2) || (dic1.Count == dic2.Count && !dic1.Except(dic2).Any()))
+                        {
+                            check = true;
+
+                        }
+
+                    }
+                }
+                if (vals.Length == v.Count && check == false)
+                {
+                    total++;
+                }
+            }
+        
+            total = 0;
+        }
