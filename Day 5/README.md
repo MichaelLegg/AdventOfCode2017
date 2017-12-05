@@ -34,7 +34,3 @@ Using this rule with the above example, the process now takes 10 steps, and the 
 How many steps does it now take to reach the exit?
 
 Your puzzle answer was 27688760.
-
-Both parts of this puzzle are complete! They provide two gold stars: **
-
-At this point, you should return to your advent calendar and try another puzzle.
