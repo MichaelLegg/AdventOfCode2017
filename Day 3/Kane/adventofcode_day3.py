@@ -1,7 +1,9 @@
 import math
 
 def find_item(list, item):
-    return [[i, list[i].index(item)] for i in range(len(list)) if item in list[i]]
+    for i in range(len(list)):
+        if item in list[i]:
+            return i, list[i].index(item)
 
 def spiral_grid():
 
@@ -102,20 +104,19 @@ def spiral_grid():
             y = y - 1
         count = count + 1
 
-    inputVal = find_item(list, input)
-    start = [centre, centre]
+    inputValY, inputValX = find_item(list, input)
 
     sums = []
 
-    if(start[0] > inputVal[0][0]):
-        sums.append(start[0] - inputVal[0][0])
+    if(centre > inputValY):
+        sums.append(centre - inputValY)
     else:
-        sums.append(inputVal[0][0] - start[0])
+        sums.append(inputValY - centre)
 
-    if (start[1] > inputVal[0][1]):
-        sums.append(start[1] - inputVal[0][1])
+    if(centre > inputValX):
+        sums.append(centre - inputValX)
     else:
-        sums.append(inputVal[0][1] - start[1])
+        sums.append(inputValX - centre)
 
     print sum(sums)
 
