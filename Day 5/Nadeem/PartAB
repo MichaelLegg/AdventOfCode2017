@@ -1,0 +1,73 @@
+      public static void MazeA()
+        {
+            System.IO.StreamReader file =
+new System.IO.StreamReader(@"C:\Users\Nadeem Sadiq\Desktop\input (2).txt");
+            string line;
+            ArrayList arr = new ArrayList();
+            while ((line = file.ReadLine()) != null)
+            {
+                arr.Add(Int32.Parse(line));
+            }
+            bool exit = false;
+            int steps = 0;
+            int location = 0;
+            while (exit==false)
+            {
+                int stepsM = 0;
+                stepsM = (int)arr[location];
+                arr[location] = (int)arr[location] +1;
+                location += stepsM;
+
+                if (location>= arr.Count)
+                {
+                    exit = true;
+                }
+
+
+                steps++;
+                
+            }
+            steps = 0;
+        }
+
+        public static void MazeB()
+        {
+            System.IO.StreamReader file =
+new System.IO.StreamReader(@"C:\Users\Nadeem Sadiq\Desktop\input (2).txt");
+            string line;
+            ArrayList arr = new ArrayList();
+            while ((line = file.ReadLine()) != null)
+            {
+                arr.Add(Int32.Parse(line));
+            }
+            bool exit = false;
+            int steps = 0;
+            int location = 0;
+            while (exit == false)
+            {
+                int stepsM = 0;
+                stepsM = (int)arr[location];
+
+                if (stepsM >=3)
+                {
+                    arr[location] = (int)arr[location] - 1;
+                }
+                else
+                {
+                    arr[location] = (int)arr[location] + 1;
+                }
+
+
+                location += stepsM;
+
+                if (location >= arr.Count)
+                {
+                    exit = true;
+                }
+
+
+                steps++;
+
+            }
+            steps = 0;
+        }
