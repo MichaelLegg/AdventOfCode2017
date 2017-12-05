@@ -40,7 +40,7 @@ namespace AoCMD4
                             duplicateFound = true;
                             break;
                         }
-                    }                  
+                    }
                 }
                 if (!duplicateFound)
                     validCount++;
@@ -50,8 +50,11 @@ namespace AoCMD4
 
         private static int Puzzle2(string[][] stringArray)
         {
+            bool duplicateFound;
+            int totalValid = 0;
             for (int i = 0; i < stringArray.GetLength(0); i++) // for each passphrase
             {
+                duplicateFound = false;
                 List<List<string>> stringsByLength = new List<List<string>>();
                 stringArray[i] = stringArray[i].OrderByDescending(s => s.Length).ToArray(); // order them longest to shortest
                 int currentLength = 1000;
@@ -65,27 +68,62 @@ namespace AoCMD4
                         {
                             stringsByLength.Add(currentList);
                             currentList = new List<string>();
-                        }                       
+                        }
                         currentList.Add(stringArray[i][x]);
+                        if (stringArray[i][x] == stringArray[i].Last())
+                        {
+                            stringsByLength.Add(currentList);
+                            currentList = new List<string>();
+                        }
                     }
                     else
                     {
-                        currentList.Add(stringArray[i][x]);
-                    }                    
+                        if (stringArray[i][x] == stringArray[i].Last())
+                        {
+                            currentList.Add(stringArray[i][x]);
+                            stringsByLength.Add(currentList);
+                            currentList = new List<string>();
+                        }
+                        else
+                            currentList.Add(stringArray[i][x]);
+                    }
+
                 }
 
-                // now need to work out all possibly anagrams for each string in each string list in the list of strings
                 foreach (List<string> stringList in stringsByLength)
                 {
-                    if (stringList.Count() == 1)
+                    if (stringList.Count() == 1) // if there's only one then no one cares about acronyms
                         continue;
                     else
+                    {
+                        // alphabetze the strings
+                        List<string> alphabetizedStrings = new List<string>();
+                        foreach (string word in stringList)
+                        {
+                            char[] a = word.ToCharArray();
+                            Array.Sort(a);
+                            alphabetizedStrings.Add(new string(a));
+                        }
 
+                        for (int x = 0; x < alphabetizedStrings.Count && !duplicateFound; x++) // for each alphabetized list
+                        {
+                            for (int y = x + 1; y < alphabetizedStrings.Count; y++) // check each other word in the passphrase
+                            {
+                                if (alphabetizedStrings[x] == alphabetizedStrings[y])
+                                {
+                                    duplicateFound = true;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                    }                   
                 }
-
-                
+                if (!duplicateFound)
+                    totalValid++;
             }
-            return 1;
+            return totalValid;
         }
     }
 }
+
