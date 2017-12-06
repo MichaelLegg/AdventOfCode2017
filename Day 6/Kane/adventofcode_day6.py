@@ -1,4 +1,4 @@
-def part1():
+def parts1and2():
     with open('input.txt') as f:
         for line in f:
             line = map(int, line.split("\t"))
@@ -6,6 +6,7 @@ def part1():
     states = []
     seen = False
     count = 0
+    matched = None
 
     while(seen == False):
         largest = None
@@ -38,6 +39,8 @@ def part1():
         if(line in states):
             seen = True
             count += 1
+            states.append(line)
+            matched = line
         else:
             temp = []
             for i in line:
@@ -45,6 +48,16 @@ def part1():
             states.append(temp)
             count += 1
 
+    indexes = []
+
+    for idx, i in enumerate(states):
+        if matched == i:
+            indexes.append(idx)
+
+    indexes.sort()
+
+    print indexes[1] - indexes[0]
+
     print count
 
-part1()
+parts1and2()
