@@ -21,7 +21,7 @@ namespace AoCMD4
             }
 
             Console.WriteLine(Puzzle1(stringArray));
-            Console.WriteLine(Puzzle2(stringArray));
+            Console.WriteLine(Puzzle2NotInsane(stringArray));
             Console.ReadLine();
         }
 
@@ -116,13 +116,45 @@ namespace AoCMD4
                                 }
                             }
                         }
-                        
-                    }                   
+
+                    }
                 }
                 if (!duplicateFound)
                     totalValid++;
             }
             return totalValid;
+        }
+        private static int Puzzle2NotInsane(string[][] stringArray)
+        {
+            int acceptablePassphrases = 0;
+            for (int i = 0; i < stringArray.GetLength(0); i++) // for each passphrase
+            {
+                string[] alphabetizedStrings = new string[stringArray[i].Length];
+                int x = 0;
+                foreach (string current in stringArray[i])
+                {
+                    char[] a = current.ToCharArray();
+                    Array.Sort(a);
+                    alphabetizedStrings[x] = new string(a);
+                    x++;
+
+                }
+                bool continueSearching = true;
+                for (int y = 0; y < alphabetizedStrings.Length && continueSearching; y++)
+                {
+                    for (int z = y + 1; z < alphabetizedStrings.Length; z++)
+                    {
+                        if (alphabetizedStrings[y] == alphabetizedStrings[z])
+                        {
+                            continueSearching = false;
+                            break;
+                        }
+                    }
+                }
+                if (continueSearching)
+                    acceptablePassphrases++;
+            }
+            return acceptablePassphrases;
         }
     }
 }
