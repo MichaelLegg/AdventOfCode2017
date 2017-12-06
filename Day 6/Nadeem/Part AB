@@ -1,0 +1,73 @@
+        public static void Redist()
+        {
+            System.IO.StreamReader file =
+new System.IO.StreamReader(@"C:\Users\Nadeem Sadiq\Desktop\input (3).txt");
+            string line;
+            ArrayList arr = new ArrayList();
+         
+            int currMaxIndex = 0;
+            int count = 0;
+            while ((line = file.ReadLine()) != null)
+            {
+                foreach (string num in line.Split('\t'))
+                {
+                    arr.Add(Int32.Parse(num));
+                }
+            }
+
+            ArrayList arrHash = new ArrayList();
+
+            bool LoopFound = false;
+            while (true) {
+                int start = 0;
+                int max = Int32.MinValue;
+               Tuple<int, int>[] set = new Tuple<int, int>[arr.Count];
+                for (int i = 0; i < arr.Count; i++)
+                {
+                    if (max < (int)arr[i])
+                    {
+                        currMaxIndex = i;
+                        max = (int)arr[i];
+                    }
+                    set[i] = Tuple.Create<int, int>(i, (int)arr[i]);
+                }
+                var arr1 = set;
+                foreach (Tuple<int,int>[] x in arrHash)
+                {
+                    start++;
+                    LoopFound = true;
+                    var  arr2 = x;
+
+                    for(int i =0; i< arr1.Length; i++)
+                    {
+                        if (!arr1[i].Equals(arr2[i]))
+                        {
+                            LoopFound = false;
+                        }
+                    }
+                    if (LoopFound)
+                    {
+                        start = count+1 - start; 
+                        break;
+                    }
+                }
+
+                arrHash.Add(set);
+
+
+                if (LoopFound)
+                {
+                    break;
+                }
+
+                count++;
+                arr[currMaxIndex] = 0;
+                for (int i = currMaxIndex + (currMaxIndex >= arr.Count - 1 ? -currMaxIndex : 1), j = max; j > 0; i = (i >= arr.Count-1 ? 0 : i + 1), j--)
+                {
+                    arr[i] = (int)arr[i] + 1;
+                }
+            }
+
+            count = 0;
+
+        }
