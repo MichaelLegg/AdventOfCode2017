@@ -1,0 +1,111 @@
+
+        public static void BottomProgram()
+        {
+            System.IO.StreamReader file =
+new System.IO.StreamReader(@"C:\Users\Nadeem Sadiq\Desktop\input (4).txt");
+            string line;
+
+            HashSet<string> hsFull = new HashSet<string>();
+            HashSet<string> hsLinked = new HashSet<string>();
+      
+            while ((line = file.ReadLine()) != null)
+            {
+                string[] arr = line.Split(' ');
+                hsFull.Add(arr[0]);
+                for (int i = 3; i< arr.Length; i++ )
+                {
+                    hsLinked.Add(arr[i].Replace(",",""));
+                }
+
+            }
+            string val;
+            foreach (string x in hsFull.ToArray<string>())
+            {
+                if (!hsLinked.Contains(x))
+                {
+                    val = x;
+                }
+            }
+        }
+
+        public static void BottomProgramB()
+        {
+            System.IO.StreamReader file =
+new System.IO.StreamReader(@"C:\Users\Nadeem Sadiq\Desktop\input (4).txt");
+            string line;
+            int c = 0;
+            Dictionary<string,int> hsFull = new Dictionary<string, int>();
+            Dictionary<string, ArrayList> hsLinked = new Dictionary<string, ArrayList>();
+            Dictionary<string, string> hsParent = new Dictionary<string, string>();
+            HashSet<string> hsLeaf = new HashSet<string>();
+            while ((line = file.ReadLine()) != null)
+            {
+                string[] arr = line.Split(' ');
+                hsFull.Add(arr[0],Int32.Parse(arr[1].Substring(1,arr[1].Length-2)));
+                ArrayList a = new ArrayList();
+
+
+                for (int i = 3; i < arr.Length; i++)
+                {
+                    a.Add(arr[i].Replace(",", ""));
+                    hsParent.Add(arr[i].Replace(",", ""), arr[0]);
+                }
+                c++;
+                hsLinked.Add(arr[0],a);
+
+                if(a.Count== 0)
+                {
+                    hsLeaf.Add(arr[0]);
+                }
+
+            }
+
+            //string val;
+            //ArrayList err = null;
+            //c = 0;
+            //foreach (ArrayList x in hsLinked.Values)
+            //{
+            //    int[] weight = new int[x.Count];
+            //    for(int i = 0; i < x.Count;i++)
+            //    {
+            //        weight[i] = hsFull[(string)x[i]];
+            //        if (i-1 != -1 && weight[i-1] != weight[i])
+            //        {
+            //            err = x;
+            //            c++;
+            //            break;
+            //        }
+            //    }
+            //    if (c >= 1)
+            //    {
+            //        break;
+            //    }
+            //}
+            int yf = Recur(hsFull,hsLinked, "hmvwl");
+            c = 0;
+        }
+       
+        public static int Recur(Dictionary<string, int> hsFull, Dictionary<string, ArrayList> hsLinked,string nodeName)
+        {
+            HashSet<string> l = new HashSet<string>();
+            x23++;
+            string rec = "";
+            int[] weight = new int[hsLinked[nodeName].Count + 1];
+            weight[hsLinked[nodeName].Count] = hsFull[nodeName];
+            int ret = weight[hsLinked[nodeName].Count];
+            for (int i =0; i< hsLinked[nodeName].Count; i++) 
+            {
+                weight[i] = Recur(hsFull, hsLinked, (string)(hsLinked[nodeName])[i]);
+                if (i - 1 != -1 && weight[i - 1] != weight[i])
+                {
+                    Console.Out.WriteLine(weight[i] + "=" + (string)(hsLinked[nodeName])[i]);
+                    
+                    //break;
+                }
+                ret += weight[i];
+            }
+         
+
+
+            return ret;
+        }
