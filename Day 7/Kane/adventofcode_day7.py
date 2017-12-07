@@ -49,13 +49,14 @@ def part2():
 
     for v in tree.values():
         if type(v) is list:
-            print v
             weightTotal = int(v[0])
             for i in range(1, len(v)):
                 if (type(tree[v[i]]) is not list):
                     weightTotal += int(tree[v[i]])
                 else:
-                    weightTotal += int(tree[v[i]][0])
+                    for k in range(1, len(tree[v[i]])):
+                        weightTotal += int(tree[v[i]][0])
+                        weightTotal += int(tree[v[i]][k])
 
             print weightTotal
 
