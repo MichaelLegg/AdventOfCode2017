@@ -1,20 +1,63 @@
-def parts1and2():
+def part1():
     tree = {}
     with open("input.txt") as f:
         for line in f:
             line = line.rstrip('\n')
+            line = line.replace(",", "")
+            line = line.replace("-> ", "")
+            line = line.replace("(", "")
+            line = line.replace(")", "")
             line = map(str, line.split(" "))
 
-            line2 = []
-            for i in line:
-                line2.append(i)
+            for i in range(1, len(line)):
+                if len(line) > 2:
+                    tree.setdefault(line[0], [])
+                    tree[line[0]].append(line[i])
+                else:
+                    tree.update({line[0]:line[i]})
 
-            for i in range(len(line)):
-                if (line[i] == '->'):
-                    del line2[i]
-                elif (',' in line[i]):
-                    line2[i].replace(',', '')
+    for key in tree.keys():
+        bool = False
+        for v in tree.values():
+            if type(v) is list:
+                if key in v:
+                    bool = True
+                    break
+        if (bool == False):
+            root = key
+            break
 
-            print line2
+    print root
 
-parts1and2()
+def part2():
+    tree = {}
+    with open("input.txt") as f:
+        for line in f:
+            line = line.rstrip('\n')
+            line = line.replace(",", "")
+            line = line.replace("-> ", "")
+            line = line.replace("(", "")
+            line = line.replace(")", "")
+            line = map(str, line.split(" "))
+
+            for i in range(1, len(line)):
+                if len(line) > 2:
+                    tree.setdefault(line[0], [])
+                    tree[line[0]].append(line[i])
+                else:
+                    tree.update({line[0]: line[i]})
+
+    for v in tree.values():
+        if type(v) is list:
+            print v
+            weightTotal = int(v[0])
+            for i in range(1, len(v)):
+                if (type(tree[v[i]]) is not list):
+                    weightTotal += int(tree[v[i]])
+                else:
+                    weightTotal += int(tree[v[i]][0])
+
+            print weightTotal
+
+# part1()
+part2()
