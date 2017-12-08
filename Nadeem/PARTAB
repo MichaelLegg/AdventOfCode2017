@@ -1,0 +1,92 @@
+        public static void RegistersA()
+        {
+            System.IO.StreamReader file =
+new System.IO.StreamReader(@"C:\Users\Nadeem Sadiq\Desktop\input (6).txt");
+            string line;
+            int c = 0;
+            Dictionary<string, int> symbolTable = new Dictionary<string, int>();
+            int MaxVal = Int32.MinValue;
+            while ((line = file.ReadLine()) != null)
+            {
+                string[] x = line.Split(' ');
+      
+                if (symbolTable.ContainsKey(x[0]) && Condition(symbolTable,x))
+                {
+                    symbolTable[x[0]] += IncDec(x[1], Int32.Parse(x[2]));
+                }
+                else if (Condition(symbolTable, x))
+                {
+                    symbolTable.Add(x[0], IncDec(x[1], Int32.Parse(x[2])));
+                }
+                else if (!symbolTable.ContainsKey(x[0]))
+                {
+                    symbolTable.Add(x[0], 0);
+                }
+
+                if (MaxVal< symbolTable[x[0]])
+                {
+                    MaxVal = symbolTable[x[0]];
+                }
+
+            }
+            MaxVal = Int32.MinValue; //Partb
+
+            foreach (int w in symbolTable.Values)
+            {
+                if (MaxVal < w)
+                {
+                    MaxVal = w;
+                }
+
+            }
+            MaxVal = Int32.MinValue; //part a
+        }
+        public static int IncDec(string inc,int value)
+        {
+            if (inc.Equals("inc"))
+            {
+                return value;
+            }
+            else
+            {
+                return -value;
+            }
+        }
+
+        public static bool Condition(Dictionary<string, int> symbolTable,string[] x)
+        {
+            int val = Int32.Parse(x[6]);
+
+            int val2 =0;
+            if ( symbolTable.ContainsKey(x[4]))
+            {
+                val2 = symbolTable[x[4]];
+            }
+            if (x[5].Equals(">"))
+            {
+                return val2 > val;
+
+            }
+            else if (x[5].Equals("<"))
+            {
+                return val2  < val;
+            }
+            else if (x[5].Equals("<="))
+            {
+                return val2 <= val;
+            }
+            else if (x[5].Equals(">="))
+            {
+                return val2 >= val;
+            }
+            else if (x[5].Equals("=="))
+            {
+                return val2 == val;
+            }
+            else if (x[5].Equals("!="))
+            {
+                return val2 != val;
+            }
+
+            return false;
+        }
