@@ -1,0 +1,107 @@
+
+        public static void StramProc()
+        {
+            System.IO.StreamReader file =
+new System.IO.StreamReader(@"C:\Users\Nadeem Sadiq\Desktop\input (7).txt");
+            char line = ' ';
+            int i = StreamProcRecurB(file, 0);
+
+
+
+        }
+
+       public static int StreamProcRecur(System.IO.StreamReader file, int pos)
+        {
+            char line = ' ';
+            int i = 0;
+
+            while ((line = (char)file.Read()) != 65535)
+            {
+                if (pos < 0)
+                {
+                    Console.Out.WriteLine("huh");
+                }
+                if (line == '{')
+                {
+                    pos++;
+                    i += pos;
+
+                }
+                else if (line == '}')
+                {
+                    pos--;
+                }
+                else if (line == ',')
+                {
+                   // i += pos;
+                }
+                else if (line == '<')
+                {
+                    bool ignore = false;
+                    while ((line = (char)file.Read()) > 0 && (line != '>' || ignore))
+                    {
+                        
+                        if (line == '!' && !ignore)
+                        {
+                            ignore = true;
+                        }
+                        else if(ignore == true)
+                        {
+                            ignore = false;
+                        }
+                    }
+
+                }
+            }
+            return i;
+        }
+
+        public static int StreamProcRecurB(System.IO.StreamReader file, int pos)
+        {
+            char line = ' ';
+            int i = 0;
+
+            while ((line = (char)file.Read()) != 65535)
+            {
+                if (pos < 0)
+                {
+                    Console.Out.WriteLine("huh");
+                }
+                if (line == '{')
+                {
+                    pos++;
+                    //i += pos;
+
+                }
+                else if (line == '}')
+                {
+                    pos--;
+                }
+                else if (line == ',')
+                {
+                    // i += pos;
+                }
+                else if (line == '<')
+                {
+                    bool ignore = false;
+                    while ((line = (char)file.Read()) > 0 && (line != '>' || ignore))
+                    {
+
+                        if (line == '!' && !ignore)
+                        {
+                            ignore = true;
+                        }
+                        else if (ignore == true)
+                        {
+                            ignore = false;
+                        }
+                        else
+                        {
+                            i++;
+                        }
+                    }
+
+                }
+            }
+            return i;
+        }
