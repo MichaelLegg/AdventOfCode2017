@@ -62,8 +62,11 @@ def part1():
 #
 #             print v, weightTotal
 
-def traverse():
-
+def traverse(tree, key):
+    if type(tree[key]) is list:
+        return (traverse(tree, key) + int(tree[key]))
+    else:
+        return key
 
 def part2():
     tree = {}
@@ -86,9 +89,7 @@ def part2():
     root = part1()
     print tree[root]
 
-    bool = False
-    while(bool == False):
-
+    traverse(tree, root)
 
 # part1()
 part2()
