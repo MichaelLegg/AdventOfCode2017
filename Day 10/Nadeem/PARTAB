@@ -1,0 +1,148 @@
+
+        public static void KnotHash()
+        {
+            System.IO.StreamReader file =
+new System.IO.StreamReader(@"C:\Users\Nadeem Sadiq\Desktop\input (8).txt");
+            string s = file.ReadLine();
+            int[] array = s.Split(',').Select(str => int.Parse(str)).ToArray();
+            int skip = 0;
+            int curPost = 0;
+            List<int> l = new List<int>();
+
+            for (int i =0; i< 256;i++)
+            {
+                l.Add(i);
+            }
+
+            for (int i=0; i<array.Length;i++)
+            {
+                List<int> t = null;
+                List<int> t1 = null;
+                if (curPost + array[i] >= 256)
+                {
+                    t = l.GetRange(curPost, (256 - curPost));
+                    t1 = l.GetRange(0, array[i]-(t.Count));
+                    t.AddRange(t1);
+                }
+                else
+                {
+                    t = l.GetRange(curPost, array[i]);
+                }
+
+                t.Reverse();
+                
+
+                if (curPost + array[i] >= 256)
+                {
+                    t1 = t.GetRange(t.Count- t1.Count, t1.Count);
+                    t.RemoveRange(t.Count - t1.Count, t1.Count);
+                    l.RemoveRange(curPost, t.Count);
+                    l.InsertRange(curPost,t);
+
+                    l.RemoveRange(0, t1.Count);
+                    l.InsertRange(0, t1);
+                }
+                else
+                { 
+                    l.RemoveRange(curPost, t.Count);
+                    l.InsertRange(curPost, t);
+                }
+
+                curPost += array[i] + skip++;
+                curPost = curPost % l.Count;
+            }
+
+            int ans = l[0] * l[1];   
+
+        }
+
+        public static void KnotHashB()
+        {
+            System.IO.StreamReader file =
+new System.IO.StreamReader(@"C:\Users\Nadeem Sadiq\Desktop\input (8).txt");
+            string s = file.ReadLine();
+            List<int>  array = new List<int>(s.ToCharArray().Select(str => (int)(str)).ToArray());
+
+
+            array.Add(17);
+            array.Add(31);
+            array.Add(73);
+            array.Add(47);
+            array.Add(23);
+           
+            int skip = 0;
+            int curPost = 0;
+            List<int> l = new List<int>();
+            int maxVal = 256;
+            for (int i = 0; i < maxVal; i++)
+            {
+                l.Add(i);
+            }
+
+            int sparseHashVal = 16;
+            int[] sparseHash = new int[l.Count / sparseHashVal];
+
+          
+
+            for (int j = 0; j < 64; j++)
+            {
+
+                for (int i = 0; i < array.Count; i++)
+                {
+                    List<int> t = null;
+                    List<int> t1 = null;
+                    if (curPost + array[i] >= maxVal)
+                    {
+                        t = l.GetRange(curPost, (maxVal - curPost));
+                        t1 = l.GetRange(0, array[i] - (t.Count));
+                        t.AddRange(t1);
+                    }
+                    else
+                    {
+                        t = l.GetRange(curPost, array[i]);
+                    }
+
+                    t.Reverse();
+
+
+                    if (curPost + array[i] >= maxVal)
+                    {
+                        t1 = t.GetRange(t.Count - t1.Count, t1.Count);
+                        t.RemoveRange(t.Count - t1.Count, t1.Count);
+                        l.RemoveRange(curPost, t.Count);
+                        l.InsertRange(curPost, t);
+
+                        l.RemoveRange(0, t1.Count);
+                        l.InsertRange(0, t1);
+                    }
+                    else
+                    {
+                        l.RemoveRange(curPost, t.Count);
+                        l.InsertRange(curPost, t);
+                    }
+
+
+                    curPost += array[i] + skip++;
+                    curPost = curPost % l.Count;
+                }
+
+            }
+            string x = "";
+            
+            for (int i =0; i< sparseHash.Length;i++)
+            {
+                int hasVal = 0;
+                
+             
+                for (int j = i* sparseHashVal; j< sparseHashVal*(i+1); j++)
+                {
+                    hasVal ^= l[j];
+                }
+
+                sparseHash[i] = hasVal;
+                x += hasVal.ToString("X2");
+            }
+            x = x.ToLower();
+
+            }
+    }
