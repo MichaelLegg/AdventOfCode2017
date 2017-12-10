@@ -1,6 +1,8 @@
-def part1():
+def parts1and2():
 
     reg = {}
+    regHighest = {}
+
 
     input = "input.txt"
 
@@ -10,6 +12,7 @@ def part1():
             line = map(str, line.split(" "))
 
             reg.update({line[0]: 0})
+            regHighest.update({line[0]: 0})
 
     with open(input) as f:
         for line in f:
@@ -53,6 +56,10 @@ def part1():
                     else:
                         reg[line[0]] -= int(line[2])
 
-    print reg[max(reg, key=reg.get)]
+            if reg[line[0]] > regHighest[line[0]]:
+                regHighest[line[0]] = reg[line[0]]
 
-part1()
+    print reg[max(reg, key=reg.get)]
+    print regHighest[max(reg, key=regHighest.get)]
+
+parts1and2()
