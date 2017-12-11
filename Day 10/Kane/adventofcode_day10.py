@@ -1,51 +1,59 @@
 def parts1and2():
-    input = "input.txt"
+    input = "test.txt"
 
     with open(input) as f:
         for line in f:
+            line.rstrip('\n')
             lengths = map(int, line.split(","))
 
     ints = []
-    for i in range(256):
+    for i in range(5):
         ints.append(i)
 
     skip = 0
     idx = 0
     last = len(ints) - 1
 
-    for i in lengths:
-        if i != 1:
-            if i + skip <= last:
-                seqRange = range(ints[idx + skip], ints[i])
+    for j in lengths:
+        print idx, j
+        if j != 1:
+            if idx + j <= last:
+                seqRange = range(ints[idx], ints[j])
                 reverse = list(reversed(seqRange))
-                for i in reverse:
-                    ints[idx] = i
-                    idx += 1
+                tempidx = idx
+                for k in reverse:
+                    ints[tempidx] = k
+                    tempidx += 1
             else:
                 temp = []
                 tempIdxs = []
-                while(idx <= last):
-                    temp.append(ints[idx])
-                    tempIdxs.append(idx)
-                    idx += 1
-                    i -= 1
+                tempidx = idx
+                tempj = j
+                while(tempidx <= last):
+                    temp.append(ints[tempidx])
+                    tempIdxs.append(tempidx)
+                    tempidx += 1
+                    tempj -= 1
 
-                idx = 0
-                while(i != 0):
-                    temp.append(ints[idx])
-                    tempIdxs.append(idx)
-                    idx += 1
-                    i -= 1
-
-                idx -= 1
+                tempidx = 0
+                while(tempj != 0):
+                    temp.append(ints[tempidx])
+                    tempIdxs.append(tempidx)
+                    tempidx += 1
+                    tempj -= 1
 
                 reverse = list(reversed(temp))
 
-                for idx2, j in enumerate(range(len(reverse))):
-                    ints[tempIdxs[idx2]] = reverse[j]
+                for idx2, p in enumerate(range(len(reverse))):
+                    ints[tempIdxs[idx2]] = reverse[p]
+
+        if idx + j <= last:
+            idx += j
+        else:
+            idx = j
 
         skip += 1
-
+        print ints
 
     print ints[0] * ints[1]
 
