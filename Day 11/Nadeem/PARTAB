@@ -1,0 +1,152 @@
+        public static void HexEd()
+        {
+            System.IO.StreamReader file =
+new System.IO.StreamReader(@"C:\Users\Nadeem Sadiq\Desktop\input (9).txt");
+            string line = "";
+            line = file.ReadLine();
+            Dictionary<string, int> symb = new Dictionary<string, int>();
+            Dictionary<Tuple<string,string>, string> comp = new Dictionary<Tuple<string, string>, string>();
+            
+            symb.Add("n", 0);
+            symb.Add("ne", 0);
+            symb.Add("se", 0);
+            symb.Add("s", 0);
+            symb.Add("sw", 0);
+
+            symb.Add("nw", 0);
+            
+            
+
+
+            var key = symb.Keys.ToArray<string>();
+
+
+            for (int i = 0; i<symb.Count; i++)
+            {
+                var tup = new Tuple<string, string>(key[i],key[(i+3)%6]);
+                comp.Add(tup,null);
+
+                tup = new Tuple<string, string>(key[i], key[(i + 2) % 6]);
+                comp.Add(tup, key[(i + 1) % 6]);
+                
+                tup = new Tuple<string, string>(key[i], key[(i + 4) % 6]);
+
+                comp.Add(tup, key[(i <= 0 ? symb.Count - 1 : i - 1)]);
+
+            }
+
+
+
+           
+            foreach (string val in line.Split(','))
+            {
+                if (symb.ContainsKey(val))
+                    symb[val] += 1;
+                
+            }
+
+
+            int totl = 0;
+            int Prevtotl = -1;
+            while (totl != Prevtotl)
+            {
+                Prevtotl = totl;
+                totl = 0;
+                
+                foreach (string vars in key)
+                {
+                    totl += symb[vars];
+                }
+
+                
+                foreach (Tuple<string,string> vals in comp.Keys)
+                {
+                    Dir(vals.Item1,vals.Item2,symb,comp[vals]);
+                }
+
+                
+
+            }
+
+            
+            
+            totl = 0;
+        }
+
+        public static void HexEdB()
+        {
+            System.IO.StreamReader file =
+new System.IO.StreamReader(@"C:\Users\Nadeem Sadiq\Desktop\input (9).txt");
+            string line = "";
+            line = file.ReadLine();
+            Dictionary<string, int> symb = new Dictionary<string, int>();
+            Dictionary<Tuple<string, string>, string> comp = new Dictionary<Tuple<string, string>, string>();
+
+            symb.Add("n", 0);
+            symb.Add("ne", 0);
+            symb.Add("se", 0);
+            symb.Add("s", 0);
+            symb.Add("sw", 0);
+
+            symb.Add("nw", 0);
+
+
+
+
+            var key = symb.Keys.ToArray<string>();
+
+
+            for (int i = 0; i < symb.Count; i++)
+            {
+                var tup = new Tuple<string, string>(key[i], key[(i + 3) % 6]);
+                comp.Add(tup, null);
+
+                tup = new Tuple<string, string>(key[i], key[(i + 2) % 6]);
+                comp.Add(tup, key[(i + 1) % 6]);
+
+                tup = new Tuple<string, string>(key[i], key[(i + 4) % 6]);
+
+                comp.Add(tup, key[(i <= 0 ? symb.Count - 1 : i - 1)]);
+
+            }
+
+
+            int maxTot = -1;
+
+            foreach (string val in line.Split(','))
+            {
+                int totl = 0;
+                if (symb.ContainsKey(val))
+                    symb[val] += 1;
+
+
+                foreach (Tuple<string, string> vals in comp.Keys)
+                {
+                    Dir(vals.Item1, vals.Item2, symb, comp[vals]);
+                }
+
+                foreach (string vars in key)
+                {
+                    totl += symb[vars];
+                }
+
+                maxTot = Math.Max(maxTot, totl);
+
+            }
+            maxTot = 0;
+        }
+
+        public static void Dir(string dir, string dir2, Dictionary<string, int> symb,string fdir)
+        {
+
+            int tempVal = symb[dir] - symb[dir2];
+            int tempVal2 = -symb[dir] + symb[dir2];
+
+            if (!(fdir is null))
+            {
+                symb[fdir] += (symb[dir] <= symb[dir2] ? symb[dir] : symb[dir2]);
+            }
+
+            symb[dir] = (tempVal > 0 ? tempVal : 0);
+            symb[dir2] = (tempVal2 > 0 ? tempVal2 : 0);
+        }
