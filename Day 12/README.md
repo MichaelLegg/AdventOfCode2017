@@ -44,7 +44,6 @@ Therefore, a total of 6 programs are in this group; all but program 1, which has
 
 How many programs are in the group that contains program ID 0?
 
-Your puzzle answer was 378.
 
 **Part Two**
 
