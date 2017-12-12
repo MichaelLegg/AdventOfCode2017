@@ -1,0 +1,90 @@
+
+        public static void DigPlmb()
+        {
+            System.IO.StreamReader sr = new System.IO.StreamReader(@"C:\Users\Nadeem Sadiq\Desktop\input (10).txt");
+            string line;
+            Dictionary<string, HashSet<string>> treeConnections = new Dictionary<string, HashSet<string>>();
+
+            while ((line = sr.ReadLine()) != null)
+            {
+                HashSet<string> values = new HashSet<string>();
+                string[] inputs = line.Split(' ');
+
+                for (int i = 2; i < inputs.Length; i++)
+                {
+                    values.Add(inputs[i].Replace(",", ""));
+                }
+
+                treeConnections.Add(inputs[0], values);
+
+
+            }
+
+
+            HashSet<string> val = new HashSet<string>();
+            RecursiveSearch(val,treeConnections,"0");
+
+            
+
+
+        }
+
+        public static void DigPlmbB()
+        {
+            System.IO.StreamReader sr = new System.IO.StreamReader(@"C:\Users\Nadeem Sadiq\Desktop\input (10).txt");
+            string line;
+            Dictionary<string, HashSet<string>> treeConnections = new Dictionary<string, HashSet<string>>();
+
+            while ((line = sr.ReadLine()) != null)
+            {
+                HashSet<string> values = new HashSet<string>();
+                string[] inputs = line.Split(' ');
+
+                for (int i = 2; i < inputs.Length; i++)
+                {
+                    values.Add(inputs[i].Replace(",", ""));
+                }
+
+                treeConnections.Add(inputs[0], values);
+
+
+            }
+            int tot = 0;
+            List<string> keyToLoop = new List<string>(treeConnections.Keys);
+            while (keyToLoop.Count != 0)
+            {
+                tot++;
+                HashSet<string> val = new HashSet<string>();
+                RecursiveSearch(val, treeConnections, keyToLoop[0]);
+
+                for (int i = 0,j=0; i < keyToLoop.Count; i++)
+                {
+                    if (val.Contains(keyToLoop[i]))
+                    {
+                      
+                        keyToLoop.Remove(keyToLoop[i]);
+                        i--;
+                        j++;
+                    }
+
+                }
+
+            }
+
+
+            tot = 0;
+
+
+        }
+
+        public static void RecursiveSearch(HashSet<string> val, Dictionary<string, HashSet<string>>  tree,string valCheck)
+        {
+            foreach (string hs in tree[valCheck])
+            {
+                if (!val.Contains(hs)) {
+                    val.Add(hs);
+                    RecursiveSearch(val, tree, hs);
+                }
+            }
+
+        }
